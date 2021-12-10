@@ -1,0 +1,3 @@
+flask
+gunicorn
+snowflake-connector-python
