@@ -18,14 +18,13 @@ conn = snowflake.connector.connect(
 def getCases():
     curs = conn.cursor()
     curs.execute(
-        "SELECT SUM(CONFIRMED) FROM JHU_DASHBOARD_COVID_19_GLOBAL WHERE COUNTRY_REGION = 'United States' AND PROVINCE_STATE = 'California';")
+        "SELECT CONFIRMED FROM JHU_DASHBOARD_COVID_19_GLOBAL WHERE COUNTRY_REGION = 'United States' AND PROVINCE_STATE = 'California' AND FIPS = '06000';")
     a = curs.fetchone()[0]
 
-    # Dividing by 2 because the Snowflake SQL Query returns SUM(CONFIRMED) + Total Cases in the Dataset Table for some reason so just did this for now
-
-    a = int(a)
-    covid = a/2
+    covid = int(a)
     return covid
+
+# Function to send custom SQL Query as a json body and returns the result
 
 def sendSQL(sql):
     curs = conn.cursor()
